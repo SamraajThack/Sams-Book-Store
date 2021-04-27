@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto"); //to hash the password
-const {v1: uuidv1} = require("uuid");
+const { v1: uuidv1 } = require("uuid");
 
 const userSchema = new mongoose.Schema(
   {
@@ -51,23 +51,21 @@ userSchema
   });
 
 userSchema.methods = {
-    authenticate: function(plainText){
-        return this.encryptPassword(plainText) === this.hashed_password;
-    },
+  authenticate: function (plainText) {
+    return this.encryptPassword(plainText) === this.hashed_password;
+  },
 
-
-
-    encryptPassword: function (password) {
-        if (!password) return " ";
-        try {
-        return crypto
-            .createHmac("sha1", this.salt)
-            .update(password)
-            .digest("hex");
-        } catch(err){
-            return '';    
-        }
+  encryptPassword: function (password) {
+    if (!password) return " ";
+    try {
+      return crypto
+        .createHmac("sha1", this.salt)
+        .update(password)
+        .digest("hex");
+    } catch (err) {
+      return "";
     }
-    };
+  },
+};
 
 module.exports = mongoose.model("User", userSchema);
