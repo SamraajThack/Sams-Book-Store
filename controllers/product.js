@@ -4,25 +4,22 @@ const _ = require("lodash");
 const fs = require("fs");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
-
 exports.productById = (req, res, next, id) => {
-    Product.findById(id).exec((err, product) => {
-        if(err || !product){
-          return res.status(400).json({
-            error: "Product not found",
-          });
-        }
-        req.product = product;
-        next();
-    });
-}
+  Product.findById(id).exec((err, product) => {
+    if (err || !product) {
+      return res.status(400).json({
+        error: "Product not found",
+      });
+    }
+    req.product = product;
+    next();
+  });
+};
 
 exports.read = (req, res) => {
   req.product.photo = undefined;
   return res.json(req.product);
-}
-
-
+};
 
 exports.create = (req, res) => {
   let form = new formidable.IncomingForm();
@@ -50,11 +47,9 @@ exports.create = (req, res) => {
       });
     }
 
-
     let product = new Product(fields);
 
     if (files.photo) {
-      
       if (files.photo.size > 1000000) {
         //if photo is less than 1mb
         return res.status(400).json({
@@ -80,18 +75,18 @@ exports.remove = (req, res) => {
   let product = req.product;
   product.remove(() => {
     product.remove((err, deletedProduct) => {
-      if(err){
+      if (err) {
         return res.status(400).json({
           error: errorHandler(err),
         });
       }
       res.json({
         deletedProduct,
-        "message": 'Product deleted successfully'
+        message: "Product deleted successfully",
       });
-    })
-  })
-}
+    });
+  });
+};
 
 exports.update = (req, res) => {
   let form = new formidable.IncomingForm();
@@ -119,12 +114,10 @@ exports.update = (req, res) => {
       });
     }
 
-
     let product = req.product;
-    product = _.extend(product, fields)
+    product = _.extend(product, fields);
 
     if (files.photo) {
-      
       if (files.photo.size > 1000000) {
         //if photo is less than 1mb
         return res.status(400).json({
