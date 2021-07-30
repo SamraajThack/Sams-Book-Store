@@ -31,7 +31,7 @@ exports.create = (req, res) => {
       });
     }
 
-    //checnk for all fields
+    //check for all fields
     const { name, description, price, category, quantity, shipping } = fields;
 
     if (
@@ -51,7 +51,7 @@ exports.create = (req, res) => {
 
     if (files.photo) {
       if (files.photo.size > 1000000) {
-        //if photo is less than 1mb
+        //if photo is more than 1mb
         return res.status(400).json({
           error: "Image should be less than 1mb in size",
         });
@@ -98,7 +98,7 @@ exports.update = (req, res) => {
       });
     }
 
-    //checnk for all fields
+    //check for all fields
     const { name, description, price, category, quantity, shipping } = fields;
 
     if (
