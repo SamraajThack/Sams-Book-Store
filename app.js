@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 require("dotenv").config();
 const expressValidator = require('express-validator');
 
@@ -26,10 +27,12 @@ mongoose
 
 
 //middleware
-app.use(morgan('dev'));
+app.use(morgan('dev')); //helpful for APIs during development
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
+app.use(cors()); // app  will be able to handle request coming from different origins
+                // backend and frontend client will have different origins
 
 
 // routes middleware
