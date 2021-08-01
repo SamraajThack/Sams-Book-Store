@@ -9,7 +9,7 @@ exports.signup = (req, res) => {
   user.save((err, user) => {
     if (err) {
       return res.status(400).json({
-        err: errorHandler(err),
+        error: errorHandler(err),
       });
     }
 
@@ -24,10 +24,10 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
   // find the user based on email
   const { email, password } = req.body;
-  User.findOne({ email }, (err, user) => {
-    if (err || !user) {
+  User.findOne({ email }, (error, user) => {
+    if (error || !user) {
       return res.status(400).json({
-        err: "User with that email does not exist. Please signup",
+        error: "User with that email does not exist. Please signup",
       });
     }
     //if user is found make sure email and password match

@@ -27,6 +27,9 @@ mongoose
 
 
 //middleware
+app.use(cors()); // app  will be able to handle request coming from different origins
+                // backend and frontend client will have different origins
+                
 app.use(morgan('dev')); //helpful for APIs during development
 app.use(bodyParser.json());
 app.use(cookieParser());
