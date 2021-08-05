@@ -34,7 +34,7 @@ const Home = () => {
   }, []);
   return (
     <Layout title="Home Page" description="Node React E-commerce App" className = "container-fluid">
-      <h2 className="mb-4">Best Sellers</h2>
+      <h2 className="mb-4 mt-3">Best Sellers</h2>
       <div className="row">
         {productsBySell.map((product, i) => (
           <Card key={i} product={product} />
