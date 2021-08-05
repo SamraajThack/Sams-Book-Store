@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import { createCategory } from "./apiAdmin";
-import { createProduct } from "./apiAdmin";
+import { createProduct, getCategories } from "./apiAdmin";
 
 const AddProduct = () => {
   const [values, setValues] = useState({
@@ -38,8 +37,20 @@ const AddProduct = () => {
     formData,
   } = values;
 
+  //load categories and set form data
+
+  const init = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setValues({ ...values, categories: data, formData: new FormData() });
+      }
+    });
+  };
+
   useEffect(() => {
-    setValues({ ...values, formData: new FormData() });
+    init();
   }, []);
 
   const handleChange = (name) => (event) => {
@@ -65,7 +76,6 @@ const AddProduct = () => {
           photo: "",
           loading: false,
           createdProduct: data.name,
-
         });
       }
     });
@@ -117,8 +127,13 @@ const AddProduct = () => {
         <div className="form-group">
           <label>Category</label>
           <select onChange={handleChange("category")} className="form-control">
-            <option value="6103a801e73075523409bd79">Python</option>
-            <option value="6103a801e73075523409bd79">PHP</option>
+            <option>Please Select</option>
+            {categories &&
+              categories.map((c, i) => (
+                <option key={i} value={c._id}>
+                  {c.name}
+                </option>
+              ))}
           </select>
         </div>
         <div className="form-group">
@@ -133,25 +148,52 @@ const AddProduct = () => {
         <div className="form-group">
           <label>Shipping</label>
           <select onChange={handleChange("shipping")} className="form-control">
+            <option>Please Select</option>
             <option value="0">No</option>
             <option value="1">Yes</option>
           </select>
         </div>
 
-        <button
-          onClick={clickSubmit}
-          className="btn btn-outline-primary mt-2"
-        >
+        <button onClick={clickSubmit} className="btn btn-outline-primary mt-2">
           Create Product
         </button>
       </form>
     );
   };
 
+  const showError = () => (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? "" : "none" }}
+    >
+      {error}
+    </div>
+  );
+
+  const showSuccess = () => (
+    <div
+      className="alert alert-info"
+      style={{ display: createdProduct ? "" : "none" }}
+    >
+      <h2>{`${createdProduct}`} is created</h2>
+    </div>
+  );
+
+  const showLoading = () =>
+    loading && (
+      <div className="alert alert-success">
+        <h2>...Loading</h2>
+      </div>
+    );
   return (
     <Layout title="New Product" description="Add a new product">
       <div className="row">
-        <div className="col-md-8 offset-md-2">{newPostForm()}</div>
+        <div className="col-md-8 offset-md-2">
+          {showLoading()}
+          {showSuccess()}
+          {showError()}
+          {newPostForm()}
+          </div>
       </div>
     </Layout>
   );

@@ -26,10 +26,12 @@ exports.create = (req, res) => {
   form.keepExtensions = true;
   form.parse(req, (err, fields, files) => {
     if (err) {
+      console.log(err)
       return res.status(400).json({
         error: "Image could not be uploaded",
       });
     }
+  
 
     //check for all fields
     const { name, description, price, category, quantity, shipping } = fields;
@@ -62,6 +64,7 @@ exports.create = (req, res) => {
 
     product.save((err, result) => {
       if (err) {
+        console.log(err)
         return res.status(400).json({
           error: errorHandler(err),
         });
