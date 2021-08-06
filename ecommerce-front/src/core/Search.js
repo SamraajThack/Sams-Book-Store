@@ -52,25 +52,42 @@ const Search = () => {
     searchData();
   };
 
+  const searchMessage = (searched, results) => {
+
+    if (searched && results.length === 1) {
+      return `Found 1 product`;
+    }
+    if (searched && results.length > 0) {
+      return `Found ${results.length} products`;
+    }
+    
+    
+    if (searched && results.length < 1) {
+      return `No products found`;
+    }
+  };
 
   const searchedProducts = (results = []) => {
     return (
-    <div className = 'row'>
-      {results.map((product,i) => (
-        <Card key={i} product = {product}/>
-      ))}
-    </div>
-    )
-  }
+      <div>
+        <h2 className="mt-4 mb-4">{searchMessage(searched, results)}</h2>
+        <div className="row">
+          {results.map((product, i) => (
+            <Card key={i} product={product} />
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   const searchForm = () => {
     return (
       <form onSubmit={searchSubmit}>
         <span className="input-group-text">
-          <div className="input-group input-group-lg">
+          <div className="input-group ">
             <div className="input-group-prepend">
               <select className="btn me-2" onChange={handleChange("category")}>
-                <option value="All">Pick Category</option>
+                <option value="All">All</option>
                 {categories.map((c, i) => (
                   <option key={i} value={c._id}>
                     {c.name}
@@ -94,10 +111,8 @@ const Search = () => {
   };
 
   return (
-    <div className = "row">
-      <div className="container mt-3 mb-3">
-        {searchForm()}
-      </div>
+    <div className="row">
+      <div className="container mt-3 mb-3">{searchForm()}</div>
       <div className="container-fluid mt-3 mb-3">
         {searchedProducts(results)}
       </div>
