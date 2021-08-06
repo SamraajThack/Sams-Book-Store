@@ -5,7 +5,9 @@ const fs = require("fs");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
 exports.productById = (req, res, next, id) => {
-  Product.findById(id).exec((err, product) => {
+  Product.findById(id)
+  .populate('category')
+  .exec((err, product) => {
     if (err || !product) {
       return res.status(400).json({
         error: "Product not found",
@@ -176,20 +178,20 @@ exports.list = (req, res) => {
  *
  * other porducts that has the same category will be returned
  */
-exports.listRelated = (req, res) => {
+ exports.listRelated = (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 6;
 
   Product.find({ _id: { $ne: req.product }, category: req.product.category })
-    .limit(limit)
-    .populate("category", "_id name")
-    .exec((err, products) => {
-      if (err) {
-        return res.status(400).json({
-          error: "Products not found",
-        });
-      }
-      res.json(products);
-    });
+      .limit(limit)
+      .populate('category', '_id name')
+      .exec((err, products) => {
+          if (err) {
+              return res.status(400).json({
+                  error: 'Products not found'
+              });
+          }
+          res.json(products);
+      });
 };
 
 exports.listCategories = (req, res) => {
