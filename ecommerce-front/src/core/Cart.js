@@ -5,6 +5,7 @@ import { getProducts } from "./apiCore";
 import Card from "./Card";
 import Search from "./Search";
 import { getCart } from "./cartHelpers";
+import Checkout from "./Checkout";
 
 const Cart = () => {
   const [items, setItems] = useState([]);
@@ -55,7 +56,9 @@ const Cart = () => {
           {items.length > 0 ? showItems(items) : noItemsMessage()}
         </div>
         <div className="col-6">
-          <h2>Show checkout options</h2>
+          <h2 className = "mb-4"> Your cart summary</h2>
+          <hr/>
+          <Checkout products = {items}/>
         </div>
       </div>
     </Layout>
