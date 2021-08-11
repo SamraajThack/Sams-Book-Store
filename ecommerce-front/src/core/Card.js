@@ -2,10 +2,20 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import ShowImage from "./showImage";
 import moment from "moment";
-import { additem, addItem } from "./cartHelpers";
+import { additem, addItem, updateItem, removeItem } from "./cartHelpers";
+import { update } from "lodash";
 
-const Card = ({ product, showViewProductButton = true, showAddToCartButton = true }) => {
+const Card = ({
+  product,
+  showViewProductButton = true,
+  showAddToCartButton = true,
+  cartUpdate = false,
+  showRemoveProductButton = false,
+  setRun = (f) => f,
+  run = undefined,
+}) => {
   const [redirect, setRedirect] = useState(false);
+  const [count, setCount] = useState(product.count);
   const showViewButton = (showViewProductButton) => {
     return (
       showViewProductButton && (
@@ -19,23 +29,51 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton = tru
   };
 
   const addToCart = () => {
-    additem(product, () => {
-      setRedirect(true)
-    });
+    // console.log('added');
+    addItem(product, setRedirect(true));
   };
 
   const shouldRedirect = (redirect) => {
-    if(redirect){
-      return <Redirect to = '/cart'/>
+    if (redirect) {
+      return <Redirect to="/cart" />;
     }
-  }
+  };
 
   const showAddToCart = (showAddToCartButton) => {
     return (
-      showAddToCartButton && (<button onClick={addToCart} className="btn btn-outline-warning mt-2 mb-2">
-        Add to cart
-      </button>)
+      showAddToCartButton && (
+        <button
+          onClick={addToCart}
+          className="btn btn-outline-warning mt-2 mb-2"
+        >
+          Add to cart
+        </button>
+      )
     );
+  };
+
+  const showRemoveButton = (showRemoveProductButton) => {
+    return (
+      showRemoveProductButton && (
+        <button
+          onClick={() => {
+            removeItem(product._id);
+            setRun(!run); // run useEffect in parent Cart
+          }}
+          className="btn btn-outline-danger mt-2 mb-2"
+        >
+          Remove Product
+        </button>
+      )
+    );
+  };
+
+  const handleChange = (productId) => (e) => {
+    setRun(!run); // run useEffect in parent Cart
+    setCount(e.target.value < 1 ? 1 : e.target.value);
+    if (e.target.value >= 1) {
+      updateItem(productId, e.target.value);
+    }
   };
 
   const showStock = (quantity) => {
@@ -43,6 +81,26 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton = tru
       <span className="badge bg-primary rounded-pill">In Stock</span>
     ) : (
       <span className="badge bg-danger rounded-pill"> Out of Stock</span>
+    );
+  };
+
+  const showCartUpdateOptions = (cartUpdate) => {
+    return (
+      cartUpdate && (
+        <div>
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Adjust Quantity</span>
+            </div>
+            <input
+              type="number"
+              className="form-control"
+              value={count}
+              onChange={handleChange(product._id)}
+            />
+          </div>
+        </div>
+      )
     );
   };
 
@@ -67,6 +125,8 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton = tru
         {showViewButton(showViewProductButton)}
 
         {showAddToCart(showAddToCartButton)}
+        {showRemoveButton(showRemoveProductButton)}
+        {showCartUpdateOptions(cartUpdate)}
       </div>
     </div>
   );

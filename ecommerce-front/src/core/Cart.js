@@ -8,10 +8,11 @@ import { getCart } from "./cartHelpers";
 
 const Cart = () => {
   const [items, setItems] = useState([]);
+  const [run, setRun] = useState(false);
 
   useEffect(() => {
     setItems(getCart());
-  }, []);
+  }, [run]);
 
   const showItems = (items) => {
     return (
@@ -20,7 +21,15 @@ const Cart = () => {
         <hr />
 
         {items.map((p, i) => (
-          <Card key={i} product={p} showAddToCartButton={false} />
+          <Card
+            key={i}
+            product={p}
+            showAddToCartButton={false}
+            cartUpdate={true}
+            showRemoveProductButton={true}
+            setRun={setRun}
+            run={run}
+          />
         ))}
       </div>
     );
