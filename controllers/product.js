@@ -3,19 +3,21 @@ const formidable = require("formidable");
 const _ = require("lodash");
 const fs = require("fs");
 const { errorHandler } = require("../helpers/dbErrorHandler");
+const { Order } = require("../models/order");
+const { json } = require("body-parser");
 
 exports.productById = (req, res, next, id) => {
   Product.findById(id)
-  .populate('category')
-  .exec((err, product) => {
-    if (err || !product) {
-      return res.status(400).json({
-        error: "Product not found",
-      });
-    }
-    req.product = product;
-    next();
-  });
+    .populate("category")
+    .exec((err, product) => {
+      if (err || !product) {
+        return res.status(400).json({
+          error: "Product not found",
+        });
+      }
+      req.product = product;
+      next();
+    });
 };
 
 exports.read = (req, res) => {
@@ -28,12 +30,11 @@ exports.create = (req, res) => {
   form.keepExtensions = true;
   form.parse(req, (err, fields, files) => {
     if (err) {
-      console.log(err)
+      console.log(err);
       return res.status(400).json({
         error: "Image could not be uploaded",
       });
     }
-  
 
     //check for all fields
     const { name, description, price, category, quantity, shipping } = fields;
@@ -66,7 +67,7 @@ exports.create = (req, res) => {
 
     product.save((err, result) => {
       if (err) {
-        console.log(err)
+        console.log(err);
         return res.status(400).json({
           error: errorHandler(err),
         });
@@ -178,20 +179,20 @@ exports.list = (req, res) => {
  *
  * other porducts that has the same category will be returned
  */
- exports.listRelated = (req, res) => {
+exports.listRelated = (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 6;
 
   Product.find({ _id: { $ne: req.product }, category: req.product.category })
-      .limit(limit)
-      .populate('category', '_id name')
-      .exec((err, products) => {
-          if (err) {
-              return res.status(400).json({
-                  error: 'Products not found'
-              });
-          }
-          res.json(products);
-      });
+    .limit(limit)
+    .populate("category", "_id name")
+    .exec((err, products) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Products not found",
+        });
+      }
+      res.json(products);
+    });
 };
 
 exports.listCategories = (req, res) => {
@@ -258,37 +259,66 @@ exports.listBySearch = (req, res) => {
 };
 
 exports.photo = (req, res, next) => {
-  if(req.product.photo.data){
-    res.set('Content-Type', req.product.photo.contentType);
+  if (req.product.photo.data) {
+    res.set("Content-Type", req.product.photo.contentType);
     return res.send(req.product.photo.data);
   }
   next();
-}
-
-
+};
 
 exports.listSearch = (req, res) => {
-
   //create query object to hold search value and category value
-  const query = {}
+  const query = {};
 
   //asign search value to query.name
-  if(req.query.search){
-    query.name = {$regex: req.query.search, $options:'i'}
+  if (req.query.search) {
+    query.name = { $regex: req.query.search, $options: "i" };
     //assign category value to query.category
-    if(req.query.category && req.query.cateogry != 'All'){
+    if (req.query.category && req.query.cateogry != "All") {
       query.category = req.query.category;
     }
 
     //find the product based on query object with 2 properties
-    Product.find(query, (err,products) => {
-      if(err){
+    Product.find(query, (err, products) => {
+      if (err) {
         return res.status(400).json({
-          error: errorHandler(err)
-        })
+          error: errorHandler(err),
+        });
       }
-      res.json(products)
-    }).select('-photo')
+      res.json(products);
+    }).select("-photo");
   }
+};
 
-}
+exports.decreaseQuantity = (req, res, next) => {
+  let bulkOps = req.body.order.products.map((item) => {
+    return {
+      updateOne: {
+        filter: { _id: item._id },
+        update: { $inc: { quantity: -item.count, sold: +item.count } },
+      },
+    };
+  });
+  Product.bulkWrite(bulkOps, {}, (error, products) => {
+    if (error) {
+      return res.status(400).json({
+        error: "Could not update product",
+      });
+    }
+    next();
+  });
+};
+
+exports.listOrders = (req, res) => {
+  Order.find()
+    .populate("user", " _id name address")
+    .sort("-created")
+    .exec((err, orders) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler(error),
+        });
+      }
+      res.json(orders)
+    });
+};
