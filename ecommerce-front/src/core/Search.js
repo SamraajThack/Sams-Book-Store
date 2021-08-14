@@ -99,7 +99,7 @@ const Search = () => {
               type="search"
               className="form-control"
               onChange={handleChange("search")}
-              placefolder="Search by name"
+              placeholder="Search by name"
             />
           </div>
           <div clasName="btn input-group-append" style={{ border: "none" }}>
