@@ -64,3 +64,19 @@ export const listOrders = (userId, token) => {
     console.log(err)
   })
 }
+
+export const getStatusValues = (userId, token) => {
+  return fetch(`${API}/orders/status-values/${userId}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`
+    },
+  })
+  .then(response => {
+    return response.json()
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
