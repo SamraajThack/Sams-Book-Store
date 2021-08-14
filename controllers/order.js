@@ -7,7 +7,7 @@ exports.orderById = (req, res, next, id) => {
     .exec((err, order) => {
       if (err || !order) {
         return res.status(400).json({
-          error: errorHandler(error),
+          error: errorHandler(err),
         });
       }
       req.order = order;
@@ -51,9 +51,9 @@ exports.updateOrderStatus = (req, res) => {
     { _id: req.body.orderId },
     { $set: { status: req.body.status } },
     (err, order) => {
-      if(err){
+      if (err) {
         return res.status(400).json({
-          err: errorHandler(err),
+          error: errorHandler(err),
         });
       }
       res.json(order);

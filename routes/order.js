@@ -15,7 +15,7 @@ router.post(
   create
 );
 router.put(
-  "/order/:orderId/status/:userId",
+  "/orders/:orderId/status/:userId",
   requireSignin,
   isAuth,
   isAdmin,
