@@ -3,8 +3,8 @@ const router = express.Router();
 
 const { requireSignin, isAuth, isAdmin } = require("../controllers/auth");
 const { userById, addOrderToUserHistory } = require("../controllers/user");
-const { decreaseQuantity } = require("../controllers/product")
-const { create , listOrders, getStatusValues} = require("../controllers/order") 
+const { decreaseQuantity } = require("../controllers/product");
+const { create, listOrders, getStatusValues, orderById, updateOrderStatus  } = require("../controllers/order");
 
 router.post(
   "/order/create/:userId",
@@ -14,10 +14,24 @@ router.post(
   decreaseQuantity,
   create
 );
+router.put(
+  "/order/:orderId/status/:userId",
+  requireSignin,
+  isAuth,
+  isAdmin,
+  updateOrderStatus
+);
 
-router.get('/orders/list/:userId', requireSignin, isAuth, isAdmin, listOrders)
-router.get('/orders/status-values/:userId', requireSignin, isAuth, isAdmin, getStatusValues)
+router.get("/orders/list/:userId", requireSignin, isAuth, isAdmin, listOrders);
+router.get(
+  "/orders/status-values/:userId",
+  requireSignin,
+  isAuth,
+  isAdmin,
+  getStatusValues
+);
 
 router.param("userId", userById);
+router.param("orderId", orderById);
 
 module.exports = router;
