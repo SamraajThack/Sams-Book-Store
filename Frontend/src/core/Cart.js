@@ -22,7 +22,8 @@ const Cart = () => {
         <hr />
 
         {items.map((p, i) => (
-          <Card
+          
+          <Card 
             key={i}
             product={p}
             showAddToCartButton={false}
@@ -31,6 +32,8 @@ const Cart = () => {
             setRun={setRun}
             run={run}
           />
+        
+          
         ))}
       </div>
     );
@@ -51,11 +54,12 @@ const Cart = () => {
       description="Manage you cart items - add, remove, checkout or continue shopping "
       className="container-fluid"
     >
+      <br/>
       <div className="row">
-        <div className="col-6">
+        <div className = 'col-5 d-flex justify-content-center'>
           {items.length > 0 ? showItems(items) : noItemsMessage()}
         </div>
-        <div className="col-6">
+        <div className="col-4">
           <h2 className = "mb-4"> Your cart summary</h2>
           <hr/>
           <Checkout products = {items} setRun={setRun} run={run}/>

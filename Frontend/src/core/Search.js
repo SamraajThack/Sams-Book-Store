@@ -8,8 +8,8 @@ const Search = () => {
     categories: [],
     category: "",
     search: "",
-    result: [],
-    searcheed: false,
+    results: [],
+    searched: false,
   });
 
   const { categories, category, search, results, searched } = data;
@@ -84,15 +84,15 @@ const Search = () => {
     return (
       <form onSubmit={searchSubmit}>
         <span className="input-group-text">
-          <div className="input-group ">
-            <div className="input-group-prepend">
-              <select className="btn me-2" onChange={handleChange("category")}>
+          <div className="input-group  ">
+            <div className="input-group-prepend ">
+              <select className="btn btn-outline-dark me-2" onChange={handleChange("category")}>
                 <option value="All">All</option>
                 {categories.map((c, i) => (
                   <option key={i} value={c._id}>
                     {c.name}
                   </option>
-                ))}
+                ))}xs
               </select>
             </div>
             <input
@@ -102,8 +102,8 @@ const Search = () => {
               placeholder="Search by name"
             />
           </div>
-          <div clasName="btn input-group-append" style={{ border: "none" }}>
-            <button className="input-group-text">Search</button>
+          <div className=" input-group-append" style={{ border: "none" }}>
+            <button className="btn btn-outline-dark input-group-text  ms-2">Search</button>
           </div>
         </span>
       </form>
@@ -112,7 +112,7 @@ const Search = () => {
 
   return (
     <div className="row">
-      <div className="container mt-3 mb-3">{searchForm()}</div>
+      <div className="container  mt-3 mb-3">{searchForm()}</div>
       <div className="container-fluid mt-3 mb-3">
         {searchedProducts(results)}
       </div>

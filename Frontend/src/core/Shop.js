@@ -5,6 +5,7 @@ import Card from "./Card";
 import Checkbox from "./Checkbox";
 import RadioBox from "./RadioBox";
 import { prices } from "./fixedPrices";
+import Search from "./Search"
 
 const Shop = () => {
   const [categories, setCategories] = useState([]);
@@ -95,11 +96,14 @@ const Shop = () => {
   return (
     <Layout
       title="Shop Page"
-      description="Search and find books of your choice"
+      description="Filter and find books of your choice"
       className="container-fluid"
     >
+      <br/>
+
+    
       <div className="row">
-        <div className="col-4">
+        <div className="col-2 ms-3">
           <h4>Filter by categories</h4>
           <ul>
             <Checkbox
@@ -107,6 +111,7 @@ const Shop = () => {
               handleFilters={(filters) => handleFilters(filters, "category")}
             />
           </ul>
+        
           <h4>Filter by price range</h4>
           <div>
             <RadioBox

@@ -4,6 +4,13 @@ import ShowImage from "./showImage";
 import moment from "moment";
 import { additem, addItem, updateItem, removeItem } from "./cartHelpers";
 import { update } from "lodash";
+import {
+  MDBCard,
+  MDBCardHeader,
+  MDBCardBody,
+  MDBCardText,
+  MDBCardImage,
+} from "mdb-react-ui-kit";
 
 const Card = ({
   product,
@@ -20,7 +27,7 @@ const Card = ({
     return (
       showViewProductButton && (
         <Link to={`/product/${product._id}`}>
-          <button className="btn btn-outline-primary mt-2 mb-2 me-2">
+          <button className="btn btn-primary mt-2 mb-2 me-2">
             View Product
           </button>
         </Link>
@@ -44,7 +51,7 @@ const Card = ({
       showAddToCartButton && (
         <button
           onClick={addToCart}
-          className="btn btn-outline-warning mt-2 mb-2"
+          className="btn btn-warning mt-2 mb-2"
         >
           Add to cart
         </button>
@@ -60,7 +67,7 @@ const Card = ({
             removeItem(product._id);
             setRun(!run); // run useEffect in parent Cart
           }}
-          className="btn btn-outline-danger mt-2 mb-2"
+          className="btn btn-danger mt-2 mb-2"
         >
           Remove Product
         </button>
@@ -78,7 +85,7 @@ const Card = ({
 
   const showStock = (quantity) => {
     return quantity > 0 ? (
-      <span className="badge bg-primary rounded-pill">In Stock</span>
+      <span className="badge bg-success rounded-pill">In Stock</span>
     ) : (
       <span className="badge bg-danger rounded-pill"> Out of Stock</span>
     );
@@ -104,31 +111,87 @@ const Card = ({
     );
   };
 
-  return (
-    <div className="card ms-2" style={{ background: '#ECEFF1', width: cartUpdate == true ? '600px': 'auto', height: 'auto'}}>
-      <div className="card-header name"><h4>{product.name}</h4></div>
-      <div className="card-body">
-        {shouldRedirect(redirect)}
+  const materialCard = () => {
+    return (
+      <MDBCard
+        className="mb-3" 
+        style={{
+          background: "#ECEFF1",
+          width: "350px",
+          height: "50rem",
+        }}
+      >
+        <MDBCardHeader className= 'd-flex justify-content-center'><h4> {product.name} </h4></MDBCardHeader>
         <ShowImage item={product} url="product" />
-        <p className="lead mt-2">{product.description.substring(0, 100)}</p>
-        <p className="black-10">{product.price}</p>
-        <p className="black-9">
-          {" "}
-          Category: {product.category && product.category.name}
-        </p>
-        <p className="black-8">
-          Added on {moment(product.createdAt).fromNow()}
-        </p>
-        {showStock(product.quantity)}
-        <br />
 
-        {showViewButton(showViewProductButton)}
+        {/* <MDBCardImage
+          src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.jpg"
+          alt="..."
+          position="top"
+          
+        /> */}
+        <MDBCardBody>
+          {shouldRedirect(redirect)}
+      
+          <MDBCardText >
+           
+            <p className="">{product.price}</p>
+            <p className="">
+              {" "}
+              Category: {product.category && product.category.name}
+            </p>
+            <p className="">
+              Added on {moment(product.createdAt).fromNow()}
+            </p>
+          </MDBCardText>
+          {showStock(product.quantity)}
+          <br />
 
-        {showAddToCart(showAddToCartButton)}
-        {showRemoveButton(showRemoveProductButton)}
-        {showCartUpdateOptions(cartUpdate)}
-      </div>
-    </div>
+          {showViewButton(showViewProductButton)}
+
+          {showAddToCart(showAddToCartButton)}
+          {showRemoveButton(showRemoveProductButton)}
+          {showCartUpdateOptions(cartUpdate)}
+        </MDBCardBody>
+      </MDBCard>
+    );
+  };
+
+  return (
+    // <div
+    //   className="card ms-2"
+    //   style={{
+    //     background: "#ECEFF1",
+    //     width: cartUpdate == true ? "600px" : "auto",
+    //     height: "auto",
+    //   }}
+    // >
+    //   <div className="card-header name">
+    //     <h4>{product.name}</h4>
+    //   </div>
+    //   <div className="card-body">
+    //     {shouldRedirect(redirect)}
+    //     <ShowImage item={product} url="product" />
+    //     <p className="lead mt-2">{product.description.substring(0, 100)}</p>
+    //     <p className="black-10">{product.price}</p>
+    //     <p className="black-9">
+    //       {" "}
+    //       Category: {product.category && product.category.name}
+    //     </p>
+    //     <p className="black-8">
+    //       Added on {moment(product.createdAt).fromNow()}
+    //     </p>
+    //     {showStock(product.quantity)}
+    //     <br />
+
+    //     {showViewButton(showViewProductButton)}
+
+    //     {showAddToCart(showAddToCartButton)}
+    //     {showRemoveButton(showRemoveProductButton)}
+    //     {showCartUpdateOptions(cartUpdate)}
+    //   </div>
+    // </div>
+    materialCard()
   );
 };
 

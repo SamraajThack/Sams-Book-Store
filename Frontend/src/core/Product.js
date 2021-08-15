@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import { getProducts, getSingleProduct, listRelated } from "./apiCore";
 import Card from "./Card";
+import ShowImage from "./showImage";
 
 const Product = (props) => {
   const [product, setProduct] = useState({});
@@ -26,6 +27,21 @@ const Product = (props) => {
     });
   };
 
+  const showProductDetails = (product) => {
+    return(
+      product.description && 
+        <div>
+          <h3>Description</h3>
+        <p>{product.description}</p>
+        </div>
+        
+      
+    )
+    
+  }
+
+  
+
   useEffect(() => {
     const productId = props.match.params.productId;
     loadSingleProduct(productId);
@@ -34,18 +50,24 @@ const Product = (props) => {
   return (
     <Layout
       title={product && product.name}
-      description={
-        product && product.description && product.description.substring(0, 100)
-      }
+      description=''
       className="container-fluid"
     >
+
+      <br/>
       <div className="row">
-        <div className = "col-8">
+        
+
+        <div className = "col-3 d-flex justify-content-center">
         {product && product.description && (
           <Card product={product} showViewProductButton={false}/>
         )}
         </div>
-        <div className = "col-4">
+
+        <div className = 'col-5'>
+        {showProductDetails(product)}
+        </div>
+        <div className = "col-3 ms-1">
           <h4>Related products</h4>
           {relatedProducts.map((p,i) => (
             <div key={i} className = "mb-3">

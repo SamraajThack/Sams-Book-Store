@@ -20,6 +20,10 @@ import {
   MDBCollapse,
 } from "mdb-react-ui-kit";
 import ShowImage from "./showImage";
+import logo from "../assets/Logo.png"
+
+
+
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
@@ -33,15 +37,10 @@ const MaterialNav = (history) => {
   const [showBasic, setShowBasic] = useState(false);
 
   return (
-    <MDBNavbar expand="lg" dark bgColor="dark">
+    <MDBNavbar expand="lg" light bgColor="light">
       <MDBContainer fluid>
-        <MDBNavbarBrand href="#">
-          <img
-            src="assets/Logo.png"
-            alt=" "
-            width="20"
-            height="24"
-          />
+        <MDBNavbarBrand href="/">
+          <img src ={logo} alt="Logo" width="50" height="24" />
         </MDBNavbarBrand>
 
         <MDBNavbarToggler
@@ -54,7 +53,7 @@ const MaterialNav = (history) => {
         </MDBNavbarToggler>
 
         <MDBCollapse navbar show={showBasic}>
-          <MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
+          <MDBNavbarNav className="mr-auto">
             <MDBNavbarItem>
               <Link className="nav-link" to="/">
                 <MDBNavbarLink className={isActive(history, "/")}>
@@ -67,17 +66,6 @@ const MaterialNav = (history) => {
               <Link className="nav-link" to="/shop">
                 <MDBNavbarLink className={isActive(history, "/shop")}>
                   Shop
-                </MDBNavbarLink>
-              </Link>
-            </MDBNavbarItem>
-
-            <MDBNavbarItem>
-              <Link className="nav-link" to="/cart">
-                <MDBNavbarLink className={isActive(history, "/cart")}>
-                  Cart{" "}
-                  <sup>
-                    <small className="cart-badge">{itemTotal()}</small>
-                  </sup>
                 </MDBNavbarLink>
               </Link>
             </MDBNavbarItem>
@@ -102,41 +90,6 @@ const MaterialNav = (history) => {
                   >
                     Dashboard
                   </MDBNavbarLink>
-                </Link>
-              </MDBNavbarItem>
-            )}
-
-            {!isAuthenticated() && (
-              <Fragment className="bg-light">
-                <MDBNavbarItem>
-                  <Link className="nav-link" to="/signin">
-                    <MDBNavbarLink className={isActive(history, "/signin")}>
-                      Sign in
-                    </MDBNavbarLink>
-                  </Link>
-                </MDBNavbarItem>
-
-                <MDBNavbarItem>
-                  <Link className="nav-link" to="/signup">
-                    <MDBNavbarLink className={isActive(history, "/signup")}>
-                      Sign up
-                    </MDBNavbarLink>
-                  </Link>
-                </MDBNavbarItem>
-              </Fragment>
-            )}
-
-            {isAuthenticated() && (
-              <MDBNavbarItem
-                className="mt-2"
-                onClick={() =>
-                  signout(() => {
-                    history.push("/");
-                  })
-                }
-              >
-                <Link>
-                  <MDBNavbarLink>Signout</MDBNavbarLink>
                 </Link>
               </MDBNavbarItem>
             )}
@@ -190,6 +143,55 @@ const MaterialNav = (history) => {
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBContainer>
+      
+        <MDBNavbarNav className="d-flex justify-content-end">
+          {!isAuthenticated() && (
+            <Fragment className="bg-light">
+              <MDBNavbarItem>
+                <Link className="nav-link" to="/signin">
+                  <MDBNavbarLink className={isActive(history, "/signin")}>
+                    Sign in
+                  </MDBNavbarLink>
+                </Link>
+              </MDBNavbarItem>
+
+              <MDBNavbarItem>
+                <Link className="nav-link" to="/signup">
+                  <MDBNavbarLink className={isActive(history, "/signup")}>
+                    Sign up
+                  </MDBNavbarLink>
+                </Link>
+              </MDBNavbarItem>
+            </Fragment>
+          )}
+
+          {isAuthenticated() && (
+            <MDBNavbarItem
+              className="mt-2"
+              onClick={() =>
+                signout(() => {
+                  history.push("/");
+                })
+              }
+            >
+              <Link>
+                <MDBNavbarLink>Signout</MDBNavbarLink>
+              </Link>
+            </MDBNavbarItem>
+          )}
+
+          <MDBNavbarItem>
+            <Link className="nav-link" to="/cart">
+              <MDBNavbarLink className={isActive(history, "/cart")}>
+                Cart{" "}
+                <sup>
+                  <small className="cart-badge">{itemTotal()}</small>
+                </sup>
+              </MDBNavbarLink>
+            </Link>
+          </MDBNavbarItem>
+        </MDBNavbarNav>
+      
     </MDBNavbar>
   );
 };
@@ -224,7 +226,9 @@ const OGNav = ({ history }) => {
           >
             Cart{" "}
             <sup>
-              <small className="cart-badge">{itemTotal()}</small>
+              <span className="badge rounded-pill badge-notification bg-danger">
+                {itemTotal()}
+              </span>
             </sup>
           </Link>
         </li>

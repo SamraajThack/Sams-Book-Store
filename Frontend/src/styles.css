@@ -12,7 +12,7 @@
 
 .name{
     background: indigo;
-    color: #fff;
+    color: black;
     font-weight: bold;
 }
 
@@ -43,7 +43,7 @@
     border-radius:50%;
     padding: 2px;
     font-size: 12px;
-    background: black;
+    background: red;
 
 
 
@@ -78,9 +78,10 @@ body {
 
 .jumbotron {
     width: 30wh;
-    height: 20vh;
+    height: 25vh;
     color: #fff;
-    background: linear-gradient(-45deg, #242121, #062b4f, #094e91, #0499d9);
+   
+    background: linear-gradient(-45deg,#C2185B, black, navy );
     background-size: 400% 400%;
     -webkit-animation: Gradient 15s ease infinite;
     -moz-animation: Gradient 15s ease infinite;

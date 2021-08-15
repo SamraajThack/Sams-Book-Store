@@ -86,7 +86,7 @@ const AddProduct = () => {
       <form className="mb-3">
         <h4>Post photo</h4>
         <div className="form-group">
-          <label className="btn btn-secondary">
+          <label className="btn btn-primary">
             <input
               onChange={handleChange("photo")}
               type="file"
@@ -187,6 +187,7 @@ const AddProduct = () => {
     );
   return (
     <Layout title="New Product" description="Add a new product">
+      <br/>
       <div className="row">
         <div className="col-md-8 offset-md-2">
           {showLoading()}
