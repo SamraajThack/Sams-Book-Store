@@ -105,8 +105,8 @@ const Card = ({
   };
 
   return (
-    <div className="card">
-      <div className="card-header name">{product.name}</div>
+    <div className="card ms-2" style={{ background: '#ECEFF1', width: cartUpdate == true ? '600px': 'auto', height: 'auto'}}>
+      <div className="card-header name"><h4>{product.name}</h4></div>
       <div className="card-body">
         {shouldRedirect(redirect)}
         <ShowImage item={product} url="product" />

@@ -34,7 +34,7 @@ const Home = () => {
     loadProductsBySell();
   }, []);
   return (
-    <Layout title="Home Page" description="Node React E-commerce App" className = "container-fluid">
+    <Layout title="Sam's E-book Store" description="Find your favorite software books here!" className = "container-fluid">
         <Search />
         
       <h2 className="mb-4 mt-3">Best Sellers</h2>
