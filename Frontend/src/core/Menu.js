@@ -16,6 +16,7 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
+
   MDBDropdownLink,
   MDBCollapse,
 } from "mdb-react-ui-kit";
@@ -97,52 +98,7 @@ const MaterialNav = (history) => {
               </MDBNavbarItem>
             )}
 
-            {/* <MDBNavbarItem>
-              <MDBNavbarLink active aria-current="page">
-                Shop
-              </MDBNavbarLink>
-            </MDBNavbarItem>
-
-            <MDBNavbarItem>
-              <Link className="nav-link" to="/shop">
-                <MDBNavbarLink active aria-current="page">
-                  Shop
-                </MDBNavbarLink>
-              </Link>
-            </MDBNavbarItem>
-            <MDBNavbarItem>
-              <MDBNavbarLink href="#">Link</MDBNavbarLink>
-            </MDBNavbarItem>
-
-            <MDBNavbarItem>
-              <MDBDropdown>
-                <MDBDropdownToggle tag="a" className="nav-link">
-                  Dropdown
-                </MDBDropdownToggle>
-                <MDBDropdownMenu>
-                  <MDBDropdownItem>
-                    <MDBDropdownLink>Action</MDBDropdownLink>
-                  </MDBDropdownItem>
-                  <MDBDropdownItem>
-                    <MDBDropdownLink>Another action</MDBDropdownLink>
-                  </MDBDropdownItem>
-                  <MDBDropdownItem>
-                    <MDBDropdownLink>Something else here</MDBDropdownLink>
-                  </MDBDropdownItem>
-                </MDBDropdownMenu>
-              </MDBDropdown>
-            </MDBNavbarItem>
-
-            <MDBNavbarItem>
-              <MDBNavbarLink
-                disabled
-                href="#"
-                tabIndex={-1}
-                aria-disabled="true"
-              >
-                Disabled
-              </MDBNavbarLink>
-            </MDBNavbarItem> */}
+           
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBContainer>
@@ -203,100 +159,6 @@ const Menu = ({ history }) => {
   return MaterialNav(history);
 };
 
-const OGNav = ({ history }) => {
-  return (
-    <div>
-      <ul className="nav nav-tabls bg-primary">
-        <li className="nav-item">
-          <Link className="nav-link" style={isActive(history, "/")} to="/">
-            Home
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link
-            className="nav-link"
-            style={isActive(history, "/shop")}
-            to="/shop"
-          >
-            Shop
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link
-            className="nav-link"
-            style={isActive(history, "/cart")}
-            to="/cart"
-          >
-            Cart{" "}
-            <sup>
-              <span className="badge rounded-pill badge-notification bg-danger">
-                {itemTotal()}
-              </span>
-            </sup>
-          </Link>
-        </li>
-        {isAuthenticated() && isAuthenticated().user.role === 0 && (
-          <li className="nav-item">
-            <Link
-              className="nav-link"
-              style={isActive(history, "/user/dashboard")}
-              to="/user/dashboard"
-            >
-              Dashboard
-            </Link>
-          </li>
-        )}
-        {isAuthenticated() && isAuthenticated().user.role === 1 && (
-          <li className="nav-item">
-            <Link
-              className="nav-link"
-              style={isActive(history, "/admin/dashboard")}
-              to="/admin/dashboard"
-            >
-              Dashboard
-            </Link>
-          </li>
-        )}
-        {!isAuthenticated() && (
-          <Fragment>
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                style={isActive(history, "/signin")}
-                to="/signin"
-              >
-                Signin
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                style={isActive(history, "/signup")}
-                to="/signup"
-              >
-                Signup
-              </Link>
-            </li>
-          </Fragment>
-        )}
-        {isAuthenticated() && (
-          <li className="nav-item">
-            <span
-              className="nav-link"
-              style={{ cursor: "pointer", color: "#ffffff" }}
-              onClick={() =>
-                signout(() => {
-                  history.push("/");
-                })
-              }
-            >
-              Signout
-            </span>
-          </li>
-        )}
-      </ul>
-    </div>
-  );
-};
+
 
 export default withRouter(Menu);
