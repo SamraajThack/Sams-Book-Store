@@ -22,8 +22,8 @@ const Cart = () => {
         <hr />
 
         {items.map((p, i) => (
-          
-          <Card 
+          <div className='col-8'>
+            <Card 
             key={i}
             product={p}
             showAddToCartButton={false}
@@ -33,6 +33,8 @@ const Cart = () => {
             run={run}
           />
         
+          </div>
+          
           
         ))}
       </div>

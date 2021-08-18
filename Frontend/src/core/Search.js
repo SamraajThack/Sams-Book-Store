@@ -72,9 +72,14 @@ const Search = () => {
       <div>
         <h2 className="mt-4 mb-4">{searchMessage(searched, results)}</h2>
         <div className="row">
+          
           {results.map((product, i) => (
+            <div className="col-3">
             <Card key={i} product={product} />
+            </div>
           ))}
+          
+          
         </div>
       </div>
     );

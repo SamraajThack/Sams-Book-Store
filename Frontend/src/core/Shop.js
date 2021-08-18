@@ -18,6 +18,8 @@ const Shop = () => {
     filters: { category: [], price: [] },
   });
 
+
+
   const init = () => {
     getCategories().then((data) => {
       if (data.error) {
@@ -118,9 +120,11 @@ const Shop = () => {
               prices={prices}
               handleFilters={(filters) => handleFilters(filters, "price")}
             />
+            
+
           </div>
         </div>
-        <div className="col-8">
+        <div className="col-9">
           <h2 className="mb-4">Products</h2>
           <div className="row">
             {/* {JSON.stringify({filteredResults})} */}
