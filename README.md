@@ -5,6 +5,19 @@ Checkout the project [here](http://samraaj.xyz/)
 # About
 This is a learning project where I wanted to learn to develop an web application from scratch to deployment as I found myself learning bits and piece of various technologies. The app is an e-commmerce book store (which can be changed to any e-commerce store). The tech stack is React.js, Express.js, Node.js and MongoDB. The site is currently deployed and is live. 
 
+
+# How to use
+
+- Signin to purchase products
+- Browse through products by searching and filtering. 
+- You can search on the homepage and filter on the shop page
+- View the product and its related products on the product page
+- Add products to cart
+- Checkout on the cart page
+- The payment gateway accepts an valid credit card number (dont worry, nothing gets processed)
+- Enjoy shopping!
+
+
 # Main Features
 
 ## Authentication
@@ -36,16 +49,6 @@ Given that it is a learning project I have used a sandbox braintree payment gate
 The app is deployed through digital ocean. 
 
 
-# How to use
-
-- Signin to purchase products
-- Browse through products by searching and filtering. 
-- You can search on the homepage and filter on the shop page
-- View the product and its related products on the product page
-- Add products to cart
-- Checkout on the cart page
-- The payment gateway accepts an valid credit card number (dont worry, nothing gets processed)
-- Enjoy shopping!
 
 
 
