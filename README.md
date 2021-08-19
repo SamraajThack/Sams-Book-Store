@@ -8,7 +8,7 @@ This is a learning project where I wanted to learn to develop an web application
 
 # How to use
 
-- Signin to purchase products
+- Signin/Signup to purchase products
 - Browse through products by searching and filtering. 
 - You can search on the homepage and filter on the shop page
 - View the product and its related products on the product page
@@ -16,7 +16,6 @@ This is a learning project where I wanted to learn to develop an web application
 - Checkout on the cart page
 - The payment gateway accepts an valid credit card number (dont worry, nothing gets processed)
 - Enjoy shopping!
-
 
 # Main Features
 
