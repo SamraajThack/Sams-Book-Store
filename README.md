@@ -28,6 +28,10 @@ The app uses JSON Web Tokens for authentication such as login on the backend. Th
 ## Admin and User Dashboard
 Through the admin dashboard an admin can create, update and delete categories and products which are fetched from the database. Admin can also view all the orders placed by customers. Users can update their profile, view purchase history and view cart through the dashboard
 
+To view the admin side enter these credentials - 
+email: samt@gmail.com
+password: sampass1
+
 ## REST API
 
 The app uses GET, PUT, POST and DELETE methods to retrieve information from the database. All queries and CRUD for different elements are executed through these methods. Used Postman for testing requests
