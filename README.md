@@ -3,7 +3,7 @@
 Checkout the project [here](http://samraaj.xyz/)
 
 # About
-This is a learning project where I wanted to learn to develop an web application from scratch to deployment as I found myself learning bits and piece of various technologies. The app is an e-commmerce book store (which can be changed to any e-commerce store). The tech stack is React.js, Express.js, Node.js and MongoDB. The site is currently deployed and is live. 
+This is a learning project where I wanted to learn to develop an web application from scratch to deployment as I found myself learning bits and pieces of various technologies. The app is an e-commmerce book store (which can be changed to any e-commerce store). The tech stack is React.js, Express.js, Node.js and MongoDB. The site is currently deployed and is live. 
 
 
 # How to use
